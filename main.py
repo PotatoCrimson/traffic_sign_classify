@@ -158,28 +158,21 @@ def classify_image():
         43: 'End no passing veh > 3.5 tons'
     }
 
-    file_path = "warning_sign.png"
+    file_path = "traffic_sign_speed_70.png"
 
     image = Image.open(file_path)
-
-    image = cv2.resize(image, (30, 30))
-
-    if image.shape[-1] == 4:
-        image = cv2.cvtColor(image, cv2.COLOR_BGRA2BGR)
-
-    image = image.astype("float32")
-
-    image = np.expand_dims(image, axis=0)
-
+    image = image.resize(image_size)
+    image = np.expand_dims(image,axis = 0)
     image = np.array(image)
 
-    pred = model.predict([image])[0]
+    print(image.shape)
 
+    pred = model.predict([image])[0]
     pred = np.argmax(pred)
     sign = classes[pred+1]
-
     print(pred+1)
     print(sign)
+
 
 if __name__ == "__main__":
     classify_image()
